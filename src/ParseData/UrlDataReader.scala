@@ -40,7 +40,7 @@ class UrlDataReader(dataRoot: String) {
 
   def getPartition(day: Int, partition: Int) = {
     val dayData = getDay(day)
-    dayData.getItem(0)
+    dayData.getItem(0)// skip the first value
 
     for (x <- partitions((day, partition))) yield dayData.getItem(x)
   }

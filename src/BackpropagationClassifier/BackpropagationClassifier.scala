@@ -28,7 +28,17 @@ object BackpropagationClassifier extends Application {
     // Partition day 0 into 2 parts
     r.partitionData(0, 2)
 
+    // select some training data
+    for(x <- )
 
+    // make a new network
+    val noFeatures = r.features.length
+    val noHidden = ceil(log(noFeatures)/log(2)) // log base 2 of features
+    val noOut = 1 // binary classification
+    val net = new Multilayer(noFeatures, noHidden, noOut)
+
+
+    // train the net on the training data
     //val day = r.getDay(0)
     for (x <- r.getPartition(0, part_1)) {
       println(x.classification.toString)
