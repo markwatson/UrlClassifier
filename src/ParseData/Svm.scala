@@ -9,10 +9,10 @@ class Svm(file: String, features: List[Int]) {
 
   private def parseFeature(in: String) = {
     val parts = in.split(":")
-    (parts.head.toInt, parts.last.toFloat)
+    (parts.head.toInt, parts.last.toDouble)
   }
 
-  private def isFeature(in: (Int, Float)) = features.exists(x => in._1 == x)
+  private def isFeature(in: (Int, Double)) = features.exists(x => in._1 == x)
 
   def loadFile = {
     val ret = Array.newBuilder[List[String]]
@@ -25,7 +25,7 @@ class Svm(file: String, features: List[Int]) {
   }
 
   // get item returns this
-  class Item(classificationIn: Int, featuresIn:IntMap[Float]) {
+  class Item(classificationIn: Int, featuresIn:IntMap[Double]) {
     val classification = classificationIn
     val features = featuresIn
     var used = false
@@ -42,7 +42,7 @@ class Svm(file: String, features: List[Int]) {
     }
 
     new Item(test_result,
-           IntMap[Float](data.tail.map(parseFeature).filter(isFeature): _*))
+           IntMap[Double](data.tail.map(parseFeature).filter(isFeature): _*))
   }
 
   def numSamples = {

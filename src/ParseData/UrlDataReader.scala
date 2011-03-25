@@ -3,6 +3,7 @@ package ParseData
 import scala.io.Source
 import scala.collection.mutable
 import scala.util.Random
+import collection.immutable.IntMap
 
 class UrlDataReader(dataRoot: String) {
   // these are constants for the data structure
@@ -43,5 +44,20 @@ class UrlDataReader(dataRoot: String) {
     dayData.getItem(0)// skip the first value
 
     for (x <- partitions((day, partition))) yield dayData.getItem(x)
+  }
+
+  // a helper function that transforms an IntMap of features into an array of features
+  def getArray(f: IntMap[Double]) = {
+    val featuresArray = new Array[Double](features.length)
+    for ((key, value) <- f) {
+      val ind = features.indexOf(key)
+      if (ind != -1) {
+        featuresArray(ind) = value
+      } else {
+        throw new IllegalArgumentException("The features list contains a feature that's not valid.")
+      }
+    }
+
+    featuresArray
   }
 }
