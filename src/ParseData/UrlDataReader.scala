@@ -34,7 +34,7 @@ class UrlDataReader(dataRoot: String) {
 
   def partitionData(day: Int, numberPartitions: Int) = {
     for (i <- 0.until(numberPartitions)) {
-      val np = new Partition(i, day, numberPartitions)
+      val np = new Partition(day, i, numberPartitions)
       partitions.put((day, i), np)
     }
   }

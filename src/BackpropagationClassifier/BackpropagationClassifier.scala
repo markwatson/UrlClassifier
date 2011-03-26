@@ -32,12 +32,15 @@ object BackpropagationClassifier extends Application {
     //val noHidden = CalcNumberHiddenNodes.novelApproach(trainingPatterns.length, noFeatures)
     val noHidden = 37
     val noOut = 1 // binary classification
-    val net = new Multilayer(noFeatures, noHidden, noOut)
+    //val net = new Multilayer(noFeatures, noHidden, noOut)
+    val net = new MultilayerDynamic(noFeatures, noOut)
 
     // train the net on the training data
-    val iterations = 1000
-    val learningRate = 0.5
-    val momentum = 0.01
-    net.train(trainingPatterns, iterations, learningRate, momentum, testPatterns)
+    val iterations = 100000
+    val learningRate = 0.3
+    val momentum = 0.00
+    val errorThreshold = 1.0
+    val addEvery = 50 // adds a new hidden node every 100 iterations
+    net.train(trainingPatterns, iterations, learningRate, momentum, testPatterns, errorThreshold, addEvery)
   }
 }

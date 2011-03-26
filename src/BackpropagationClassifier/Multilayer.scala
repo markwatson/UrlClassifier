@@ -2,7 +2,7 @@ package BackpropagationClassifier
 import java.lang.Math
 import java.util.Random
 
-class Multilayer(noIns:Int, noHidden:Int, noOutputs:Int) {
+class Multilayer(var noIns:Int, var noHidden:Int, var noOutputs:Int) {
   // sigmoid function - using tanh
   val sigmoid = (x:Double) => Math.tanh(x)
   val sigmoidPrimeOfY = (y:Double) => 1.0 - Math.pow(y,2)
@@ -12,12 +12,12 @@ class Multilayer(noIns:Int, noHidden:Int, noOutputs:Int) {
 
   // arrays of activations
   val inputActivations = new Array[Double](noInputs)
-  val hiddenActivations = new Array[Double](noHidden)
+  var hiddenActivations = new Array[Double](noHidden)
   val outputActivations = new Array[Double](noOutputs)
 
   // initialize the weights
-  val inputWeights = Array.ofDim[Double](noInputs, noHidden)
-  val outputWeights = Array.ofDim[Double](noHidden, noOutputs)
+  var inputWeights = Array.ofDim[Double](noInputs, noHidden)
+  var outputWeights = Array.ofDim[Double](noHidden, noOutputs)
   // init weights to random values
   // TODO: Adjust these and check performance
   val rnd = new Random
@@ -34,9 +34,8 @@ class Multilayer(noIns:Int, noHidden:Int, noOutputs:Int) {
   }
 
   // momentum
-  val inputLastChanges = Array.ofDim[Double](noInputs, noHidden)
-  val outputLastChanges = Array.ofDim[Double](noHidden, noOutputs)
-
+  var inputLastChanges = Array.ofDim[Double](noInputs, noHidden)
+  var outputLastChanges = Array.ofDim[Double](noHidden, noOutputs)
 
   def update(inputs:Array[Double]):Array[Double] = {
     // work on the inputs
@@ -125,7 +124,8 @@ class Multilayer(noIns:Int, noHidden:Int, noOutputs:Int) {
     }
   }
 
-  def train(patterns:Array[(Array[Double],Array[Double])], iterations:Int, learningRate:Double, momentumRate:Double, testPatters:Array[(Array[Double],Array[Double])]) = {
+  def train(patterns:Array[(Array[Double],Array[Double])], iterations:Int, learningRate:Double, momentumRate:Double,
+            testPatters:Array[(Array[Double],Array[Double])]) = {
     for (x <- 0 until iterations) {
       var error:Double = 0.0
       for (p <- patterns) {
